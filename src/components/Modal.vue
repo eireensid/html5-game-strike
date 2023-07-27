@@ -1,14 +1,18 @@
 <template>
-  <div class="modal" v-show="isShow">
+  <div class="modal" v-show="isModalShow">
     <h2 class="title">Welcome to the game!</h2>
-    <button class="btn btn-modal">PLAY!</button>
+    <button class="btn btn-modal" @click="play">PLAY!</button>
   </div>
 </template>
 
 <script setup lang="ts">
-import {ref} from "vue";
+import {newGame, modal, isModalShow} from "@/composables/globalVars";
 
-const isShow = ref(true)
+const play = () => {
+  isModalShow.value = modal.close()
+  newGame.start()
+}
+
 </script>
 
 <style scoped>

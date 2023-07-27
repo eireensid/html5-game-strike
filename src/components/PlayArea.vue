@@ -1,11 +1,12 @@
 <template>
   <div class="wrapper">
-<!--    <canvas id="canvas" class="canvas"></canvas>-->
+    <canvas v-show="!isModalShow" id="canvas" class="canvas"></canvas>
   </div>
 </template>
 
 <script setup lang="ts">
 import {onMounted} from "vue";
+import {isModalShow} from "@/composables/globalVars";
 
 onMounted(() => {
   const canvas = document.querySelector('#canvas')

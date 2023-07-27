@@ -46,6 +46,7 @@ import PlayIcon from "@/assets/icons/circle-play-regular.svg"
 }
 .title {
   font-weight: 300;
+  font-size: 36px;
 }
 .score {
   font-size: 28px;
