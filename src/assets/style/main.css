@@ -3,3 +3,7 @@
 body {
   font-family: 'Handjet', cursive;
 }
+
+#app {
+  min-height: 100vh;
+}

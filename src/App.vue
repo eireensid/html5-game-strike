@@ -1,7 +1,7 @@
 <template>
   <Header />
   <div class="wrapper">
-    <canvas width="200" height="200" id="canvas"></canvas>
+    <canvas id="canvas" class="canvas"></canvas>
   </div>
 </template>
 
@@ -17,5 +17,20 @@ onMounted(() => {
 </script>
 
 <style scoped>
-
+.wrapper {
+  background-image: url('./assets/img/matrix.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  min-height: inherit;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.canvas {
+  width: 80%;
+  height: 80%;
+}
 </style>
