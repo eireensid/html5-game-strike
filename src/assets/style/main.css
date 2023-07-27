@@ -1,4 +1,5 @@
 @import url("reset.css");
+@import url("vars.css");
 
 body {
   font-family: 'Handjet', cursive;
@@ -6,4 +7,18 @@ body {
 
 #app {
   min-height: 100vh;
+}
+
+.btn {
+  padding: 8px;
+  color: var(--text-color);
+  border-radius: 8px;
+  border: 3px solid #0C693B;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all .25s;
+}
+.btn:hover {
+  opacity: .7;
 }
