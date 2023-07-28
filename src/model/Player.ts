@@ -4,6 +4,7 @@ export default class Player {
   score: number = 0
   static width = 60
   static height = 70
+  speed = 10
 
   constructor(ctx, pic, x, y) {
     if (Player._instance) {
@@ -23,9 +24,9 @@ export default class Player {
   }
 
   move(canvas, ctx, pic, e) {
-    const x = ref(e.pageX)
-    if (Player.width / 2 + 20 < x.value && x.value < canvas.width - Player.width / 2 - 20) {
-      this.x = x.value - Player.width / 2;
+    const x = e.pageX
+    if (Player.width / 2 + 20 < x && x < canvas.width - Player.width / 2 - 20) {
+      this.x = x - Player.width / 2;
     }
     requestAnimationFrame(() => {
       ctx.fillStyle = "#070F20"
@@ -33,5 +34,25 @@ export default class Player {
       this.draw(ctx, pic, this.x, canvas.height - Player.height - 20, Player.width, Player.height)
     })
     // console.log('x', x.value)
+  }
+
+  goLeft(canvas, ctx, pic) {
+    this.x -= this.speed;
+
+    requestAnimationFrame(() => {
+      ctx.fillStyle = "#070F20"
+      ctx.fillRect(0, 0, canvas.width, canvas.height)
+      this.draw(ctx, pic, this.x, canvas.height - Player.height - 20, Player.width, Player.height)
+    })
+  }
+
+  goRight(canvas, ctx, pic) {
+    this.x += this.speed
+
+    requestAnimationFrame(() => {
+      ctx.fillStyle = "#070F20"
+      ctx.fillRect(0, 0, canvas.width, canvas.height)
+      this.draw(ctx, pic, this.x, canvas.height - Player.height - 20, Player.width, Player.height)
+    })
   }
 }

@@ -1,16 +1,16 @@
 <template>
   <div class="wrapper">
-    <canvas v-show="!isModalShow" id="canvas" class="canvas" @mousemove="player.move(canvas, ctx, playerPic, $event)"></canvas>
+    <canvas v-show="!isModalShow" id="canvas" class="canvas"></canvas>
     <img id="player" src="@/assets/img/wbc2.png" style="display: none;"/>
     <img id="topEnemy" src="@/assets/img/virus1.png" style="display: none;"/>
     <img id="middleEnemy" src="@/assets/img/virus2.png" style="display: none;"/>
     <img id="bottomEnemy" src="@/assets/img/virus3.png" style="display: none;"/>
-    <div class="controls">
+    <div class="controls" v-show="!isModalShow">
       <button class="btn fire-btn">[f]ire</button>
-      <button class="btn">
+      <button class="btn" @click="player.goLeft(canvas, ctx, playerPic)">
         <LeftIcon class="icon"/>
       </button>
-      <button class="btn">
+      <button class="btn" @click="player.goRight(canvas, ctx, playerPic)">
         <RightIcon class="icon"/>
       </button>
     </div>
@@ -34,7 +34,7 @@ const bottomEnemy = ref(null)
 
 onMounted(() => {
   canvas.value = document.querySelector('#canvas')
-  canvas.value.height = window.innerHeight * 0.8;
+  canvas.value.height = window.innerHeight * 0.75;
   canvas.value.width = window.innerWidth * 0.8;
   ctx.value = canvas.value.getContext('2d')
   ctx.value.fillStyle = "#070F20"
