@@ -1,17 +1,29 @@
 <template>
   <div class="wrapper">
-    <canvas v-show="!isModalShow" id="canvas" class="canvas"></canvas>
+    <canvas v-show="!isModalShow" id="canvas" class="canvas" @mousemove="player.move(ctx, canvas, pic, $event)"></canvas>
+    <img id="source" src="@/assets/img/wbc2.png" style="display: none;"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-import {onMounted} from "vue";
+import {onMounted, ref} from "vue";
 import {isModalShow} from "@/composables/globalVars";
+import Player from "@/model/Player";
+
+const canvas = ref(null);
+const ctx = ref(null);
+const x = ref(130);
+const pic = ref(null)
+const player = ref(null)
 
 onMounted(() => {
-  const canvas = document.querySelector('#canvas')
-  const ctx = canvas.getContext('2d')
-  ctx.fillRect(0, 0, canvas.width, canvas.height)
+  canvas.value = document.querySelector('#canvas')
+  ctx.value = canvas.value.getContext('2d')
+  ctx.value.fillStyle = "#070F20"
+  ctx.value.fillRect(0, 0, canvas.value.width, canvas.value.height)
+  pic.value = document.querySelector('#source')
+  player.value = new Player(ctx.value, pic.value, 130, 100, 30, 40)
 })
 
 </script>
