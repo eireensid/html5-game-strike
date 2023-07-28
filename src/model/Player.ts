@@ -2,10 +2,15 @@ import {ref} from "vue";
 
 export default class Player {
   score: number = 0
-  static width = 30
-  static height = 40
+  static width = 60
+  static height = 70
 
   constructor(ctx, pic, x, y) {
+    if (Player._instance) {
+      throw new Error("Singleton classes can't be instantiated more than once.")
+    }
+    Player._instance = this;
+
     pic.onload = function() {
       ctx.drawImage(pic, x, y, Player.width, Player.height)
     }
@@ -27,6 +32,6 @@ export default class Player {
       ctx.fillRect(0, 0, canvas.width, canvas.height)
       this.draw(ctx, pic, this.x, canvas.height - Player.height - 20, Player.width, Player.height)
     })
-    console.log('x', x.value)
+    // console.log('x', x.value)
   }
 }
