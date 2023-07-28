@@ -4,7 +4,7 @@ export default class Player {
   score: number = 0
   static width = 60
   static height = 70
-  speed = 10
+  step = 40
 
   constructor(ctx, pic, x, y) {
     if (Player._instance) {
@@ -37,7 +37,15 @@ export default class Player {
   }
 
   goLeft(canvas, ctx, pic) {
-    this.x -= this.speed;
+    // if (gameStarted) {
+    //   if (xPos < 0)
+    //     xPos = 0;
+    //   else if (xPos > stage.width - ship.width)
+    //     xPos = stage.width - ship.width;
+    // }
+    if (this.x > this.step) {
+      this.x -= this.step;
+    }
 
     requestAnimationFrame(() => {
       ctx.fillStyle = "#070F20"
@@ -47,7 +55,9 @@ export default class Player {
   }
 
   goRight(canvas, ctx, pic) {
-    this.x += this.speed
+    if (this.x < canvas.width - Player.width - this.step) {
+      this.x += this.step
+    }
 
     requestAnimationFrame(() => {
       ctx.fillStyle = "#070F20"
