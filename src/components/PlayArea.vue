@@ -6,14 +6,20 @@
     <img id="middleEnemy" src="@/assets/img/virus2.png" style="display: none;"/>
     <img id="bottomEnemy" src="@/assets/img/virus3.png" style="display: none;"/>
     <div class="controls">
-      <button class="fire-btn"></button>
-      <button class="left-btn"></button>
-      <button class="right-btn"></button>
+      <button class="btn fire-btn">[f]ire</button>
+      <button class="btn">
+        <LeftIcon class="icon"/>
+      </button>
+      <button class="btn">
+        <RightIcon class="icon"/>
+      </button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import LeftIcon from "@/assets/icons/left-long-solid.svg"
+import RightIcon from "@/assets/icons/right-long-solid.svg"
 import {onMounted, ref} from "vue";
 import {isModalShow} from "@/composables/globalVars";
 import Player from "@/model/Player";
@@ -59,6 +65,20 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 80px;
+  padding-top: 20px;
+}
+.controls {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  bottom: 5%;
+}
+.icon {
+  width: 28px;
+  fill: var(--text-color)
+}
+.fire-btn {
+  padding: 14px 8px;
 }
 </style>
