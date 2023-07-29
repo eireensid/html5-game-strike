@@ -21,14 +21,13 @@
 import LeftIcon from "@/assets/icons/left-long-solid.svg"
 import RightIcon from "@/assets/icons/right-long-solid.svg"
 import {onMounted, ref} from "vue";
-import {isModalShow} from "@/composables/globalVars";
+import {isModalShow, player} from "@/composables/globalVars";
 import Player from "@/model/Player";
 import {BottomEnemy} from "@/model/Enemy";
 
 const canvas = ref(null);
 const ctx = ref(null);
 const playerPic = ref(null)
-const player = ref(null)
 const bottomEnemyPic = ref(null)
 const bottomEnemy = ref(null)
 

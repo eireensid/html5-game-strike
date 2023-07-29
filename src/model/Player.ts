@@ -1,7 +1,7 @@
-import {ref} from "vue";
+import {newGame} from "@/composables/globalVars";
 
 export default class Player {
-  score: number = 0
+  score = 0
   static width = 60
   static height = 70
   step = 40
@@ -23,35 +23,12 @@ export default class Player {
     ctx.drawImage(pic, x, y, width, height)
   }
 
-  move(canvas, ctx, pic, e) {
-    const x = e.pageX
-    if (Player.width / 2 + 20 < x && x < canvas.width - Player.width / 2 - 20) {
-      this.x = x - Player.width / 2;
-    }
-    requestAnimationFrame(() => {
-      ctx.fillStyle = "#070F20"
-      ctx.fillRect(0, 0, canvas.width, canvas.height)
-      this.draw(ctx, pic, this.x, canvas.height - Player.height - 20, Player.width, Player.height)
-    })
-    // console.log('x', x.value)
-  }
-
   goLeft(canvas, ctx, pic) {
-    // if (gameStarted) {
-    //   if (xPos < 0)
-    //     xPos = 0;
-    //   else if (xPos > stage.width - ship.width)
-    //     xPos = stage.width - ship.width;
-    // }
     if (this.x > this.step) {
       this.x -= this.step;
     }
 
-    requestAnimationFrame(() => {
-      ctx.fillStyle = "#070F20"
-      ctx.fillRect(0, 0, canvas.width, canvas.height)
-      this.draw(ctx, pic, this.x, canvas.height - Player.height - 20, Player.width, Player.height)
-    })
+    newGame.render(canvas, ctx, pic)
   }
 
   goRight(canvas, ctx, pic) {
@@ -59,10 +36,6 @@ export default class Player {
       this.x += this.step
     }
 
-    requestAnimationFrame(() => {
-      ctx.fillStyle = "#070F20"
-      ctx.fillRect(0, 0, canvas.width, canvas.height)
-      this.draw(ctx, pic, this.x, canvas.height - Player.height - 20, Player.width, Player.height)
-    })
+    newGame.render(canvas, ctx, pic)
   }
 }
