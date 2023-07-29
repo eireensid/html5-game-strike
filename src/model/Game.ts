@@ -1,5 +1,6 @@
 import Player from "@/model/Player";
-import {player} from "@/composables/globalVars";
+import {player, canvas, ctx, playerPic} from "@/composables/initialState";
+import {bottomEnemy} from "@/composables/initialState";
 
 export default class Game {
   constructor() {
@@ -13,11 +14,12 @@ export default class Game {
 
   }
 
-  render(canvas, ctx, pic) {
+  render() {
     requestAnimationFrame(() => {
-      ctx.fillStyle = "#070F20"
-      ctx.fillRect(0, 0, canvas.width, canvas.height)
-      player.value.draw(ctx, pic, player.value.x, canvas.height - Player.height - 20, Player.width, Player.height)
+      ctx.value.fillStyle = "#070F20"
+      ctx.value.fillRect(0, 0, canvas.value.width, canvas.value.height)
+      player.value.draw(player.value.x, canvas.value.height - Player.height - 20)
+      bottomEnemy.value.draw(20, 300)
     })
   }
 

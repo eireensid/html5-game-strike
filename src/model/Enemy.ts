@@ -1,3 +1,5 @@
+import {ctx, bottomEnemyPic} from "@/composables/initialState";
+
 class Enemy {
 
 }
@@ -6,14 +8,14 @@ export class BottomEnemy extends Enemy {
   static width = 60
   static height = 70
 
-  constructor(ctx, pic, x, y) {
+  constructor(x, y) {
     super()
-    pic.onload = function() {
-      ctx.drawImage(pic, x, y, BottomEnemy.width, BottomEnemy.height)
+    bottomEnemyPic.value.onload = function() {
+      ctx.value.drawImage(bottomEnemyPic.value, x, y, BottomEnemy.width, BottomEnemy.height)
     }
   }
 
-  draw(ctx, pic, x, y, width, height) {
-    ctx.drawImage(pic, x, y, width, height)
+  draw(x, y) {
+    ctx.value.drawImage(bottomEnemyPic.value, x, y, BottomEnemy.width, BottomEnemy.height)
   }
 }

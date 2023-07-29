@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import {newGame, modal, isModalShow} from "@/composables/globalVars";
+import {newGame, modal, isModalShow} from "@/composables/initialState";
 
 const play = () => {
   isModalShow.value = modal.close()

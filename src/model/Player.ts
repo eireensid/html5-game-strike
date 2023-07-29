@@ -1,41 +1,41 @@
-import {newGame} from "@/composables/globalVars";
+import {newGame, canvas, ctx, playerPic} from "@/composables/initialState";
 
 export default class Player {
   score = 0
-  static width = 60
-  static height = 70
+  static width = 80
+  static height = 90
   step = 40
 
-  constructor(ctx, pic, x, y) {
+  constructor(x, y) {
     if (Player._instance) {
       throw new Error("Singleton classes can't be instantiated more than once.")
     }
     Player._instance = this;
 
-    pic.onload = function() {
-      ctx.drawImage(pic, x, y, Player.width, Player.height)
+    playerPic.value.onload = function() {
+      ctx.value.drawImage(playerPic.value, x, y, Player.width, Player.height)
     }
 
     this.x = x
   }
 
-  draw(ctx, pic, x, y, width, height) {
-    ctx.drawImage(pic, x, y, width, height)
+  draw(x, y) {
+    ctx.value.drawImage(playerPic.value, x, y, Player.width, Player.height)
   }
 
-  goLeft(canvas, ctx, pic) {
+  goLeft() {
     if (this.x > this.step) {
       this.x -= this.step;
     }
 
-    newGame.render(canvas, ctx, pic)
+    newGame.render()
   }
 
-  goRight(canvas, ctx, pic) {
-    if (this.x < canvas.width - Player.width - this.step) {
+  goRight() {
+    if (this.x < canvas.value.width - Player.width - this.step) {
       this.x += this.step
     }
 
-    newGame.render(canvas, ctx, pic)
+    newGame.render()
   }
 }

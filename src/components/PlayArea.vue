@@ -7,10 +7,10 @@
     <img id="bottomEnemy" src="@/assets/img/virus3.png" style="display: none;"/>
     <div class="controls" v-show="!isModalShow">
       <button class="btn fire-btn">[f]ire</button>
-      <button class="btn" @click="player.goLeft(canvas, ctx, playerPic)">
+      <button class="btn" @click="player.goLeft">
         <LeftIcon class="icon"/>
       </button>
-      <button class="btn" @click="player.goRight(canvas, ctx, playerPic)">
+      <button class="btn" @click="player.goRight">
         <RightIcon class="icon"/>
       </button>
     </div>
@@ -21,15 +21,9 @@
 import LeftIcon from "@/assets/icons/left-long-solid.svg"
 import RightIcon from "@/assets/icons/right-long-solid.svg"
 import {onMounted, ref} from "vue";
-import {isModalShow, player} from "@/composables/globalVars";
+import {isModalShow, player, canvas, ctx, playerPic, bottomEnemy, bottomEnemyPic} from "@/composables/initialState";
 import Player from "@/model/Player";
 import {BottomEnemy} from "@/model/Enemy";
-
-const canvas = ref(null);
-const ctx = ref(null);
-const playerPic = ref(null)
-const bottomEnemyPic = ref(null)
-const bottomEnemy = ref(null)
 
 onMounted(() => {
   canvas.value = document.querySelector('#canvas')
@@ -39,15 +33,13 @@ onMounted(() => {
   ctx.value.fillStyle = "#070F20"
   ctx.value.fillRect(0, 0, canvas.value.width, canvas.value.height)
   playerPic.value = document.querySelector('#player')
-  player.value = new Player(ctx.value, playerPic.value,
-      canvas.value.width / 2 - Player.width / 2,
-      canvas.value.height - Player.height - 20
+  player.value = new Player(
+    canvas.value.width / 2 - Player.width / 2,
+    canvas.value.height - Player.height - 20
   )
 
   bottomEnemyPic.value = document.querySelector('#bottomEnemy')
-  bottomEnemy.value = new BottomEnemy(ctx.value, bottomEnemyPic.value,
-      20, 300
-  )
+  bottomEnemy.value = new BottomEnemy(20, 300)
 })
 
 </script>
