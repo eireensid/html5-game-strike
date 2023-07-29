@@ -1,12 +1,8 @@
 export default class Modal {
-  private isShow: boolean
+  isShow: boolean
 
   constructor(isShow = true) {
     this.isShow = isShow
-  }
-
-  get isShow() {
-    return this.isShow
   }
 
   open() {

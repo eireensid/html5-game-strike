@@ -1,5 +1,5 @@
-import {newGame, canvas, ctx, playerPic, weapon} from "@/composables/initialState";
-import Weapon from "@/model/Weapon";
+import {newGame, canvas, ctx, playerPic, bullet, bullets} from "@/composables/initialState";
+import Bullet from "@/model/Bullet";
 
 export default class Player {
   score = 0
@@ -39,6 +39,7 @@ export default class Player {
   fire() {
     if (!newGame.running) return
 
-    weapon.value = new Weapon(canvas.value.width / 2 - Weapon.width / 2, 400)
+    bullet.value = new Bullet(this.x + Player.width / 2, 400)
+    bullets.push(bullet.value)
   }
 }

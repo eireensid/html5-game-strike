@@ -2,7 +2,7 @@
   <div class="wrapper">
     <canvas v-show="!isModalShow" id="canvas" class="canvas"></canvas>
     <img id="player" src="@/assets/img/wbc2.png" style="display: none;"/>
-    <img id="weapon" src="@/assets/img/potion.png" style="display: none;"/>
+    <img id="bullet" src="@/assets/img/potion.png" style="display: none;"/>
     <img id="topEnemy" src="@/assets/img/virus1.png" style="display: none;"/>
     <img id="middleEnemy" src="@/assets/img/virus2.png" style="display: none;"/>
     <img id="bottomEnemy" src="@/assets/img/virus3.png" style="display: none;"/>

@@ -1,8 +1,7 @@
 import Player from "@/model/Player";
-import {player, canvas, ctx, weapon, playerPic, bottomEnemyPic, weaponPic} from "@/composables/initialState";
+import {player, canvas, ctx, playerPic, bottomEnemyPic, bulletPic, bullets} from "@/composables/initialState";
 import {bottomEnemy} from "@/composables/initialState";
-import Weapon from "@/model/Weapon";
-import {BottomEnemy} from "./Enemy";
+import {BottomEnemy} from "@/model/Enemy";
 
 export default class Game {
   private intervalId
@@ -28,7 +27,7 @@ export default class Game {
     bottomEnemyPic.value = document.querySelector('#bottomEnemy')
     bottomEnemy.value = new BottomEnemy(20, 300)
 
-    weaponPic.value = document.querySelector('#weapon')
+    bulletPic.value = document.querySelector('#bullet')
   }
 
   render() {
@@ -37,10 +36,19 @@ export default class Game {
       ctx.value.fillRect(0, 0, canvas.value.width, canvas.value.height)
       player.value.draw(player.value.x, canvas.value.height - Player.height - 20)
       bottomEnemy.value.draw(20, 300)
-      if (weapon.value) {
-        weapon.value.update()
-        weapon.value.draw(canvas.value.width / 2 - Weapon.width / 2, weapon.value.y)
-      }
+
+      bullets.forEach((bullet, ind, obj) => {
+        if (bullet.y < 0) {
+          obj.splice(ind, 1)
+        }
+      });
+
+      bullets.forEach(bullet => {
+        if (bullet) {
+          bullet.update()
+          bullet.draw(bullet.x, bullet.y)
+        }
+      })
     })
   }
 
