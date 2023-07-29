@@ -8,10 +8,6 @@ export default class Player {
   step = 40
 
   constructor(x, y) {
-    if (Player._instance) {
-      throw new Error("Singleton classes can't be instantiated more than once.")
-    }
-    Player._instance = this;
 
     playerPic.value.onload = function() {
       ctx.value.drawImage(playerPic.value, x, y, Player.width, Player.height)
@@ -25,24 +21,24 @@ export default class Player {
   }
 
   goLeft() {
+    if (!newGame.running) return
+
     if (this.x > this.step) {
       this.x -= this.step;
     }
-
-    newGame.render()
   }
 
   goRight() {
+    if (!newGame.running) return
+
     if (this.x < canvas.value.width - Player.width - this.step) {
       this.x += this.step
     }
-
-    newGame.render()
   }
 
   fire() {
-    weapon.value = new Weapon(canvas.value.width / 2 - Weapon.width / 2, 200)
+    if (!newGame.running) return
 
-    newGame.render()
+    weapon.value = new Weapon(canvas.value.width / 2 - Weapon.width / 2, 400)
   }
 }

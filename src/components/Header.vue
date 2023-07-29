@@ -1,15 +1,15 @@
 <template>
   <div class="header">
     <div class="column">
-      <button class="btn btn-new">NEW</button>
+      <button class="btn btn-new" @click="newGame.restart">NEW</button>
       <span class="score">0</span>
     </div>
     <h1 class="title">Critical Space Strike</h1>
     <div class="column column-right">
-      <button class="btn btn-icon">
+      <button class="btn btn-icon" @click="newGame.stop">
         <PauseIcon class="icon"/>
       </button>
-      <button class="btn btn-icon">
+      <button class="btn btn-icon" @click="newGame.start">
         <PlayIcon class="icon icon-start"/>
       </button>
     </div>
@@ -19,6 +19,7 @@
 <script setup>
 import PauseIcon from "@/assets/icons/circle-pause-regular.svg"
 import PlayIcon from "@/assets/icons/circle-play-regular.svg"
+import {newGame} from "@/composables/initialState"
 </script>
 
 <style scoped>
