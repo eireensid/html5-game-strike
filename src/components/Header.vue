@@ -2,7 +2,7 @@
   <div class="header">
     <div class="column">
       <button class="btn btn-new" @click="newGame.restart">NEW</button>
-      <span class="score">0</span>
+      <span class="score">{{player && player.score}}</span>
     </div>
     <h1 class="title">Critical Space Strike</h1>
     <div class="column column-right">
@@ -19,7 +19,7 @@
 <script setup>
 import PauseIcon from "@/assets/icons/circle-pause-regular.svg"
 import PlayIcon from "@/assets/icons/circle-play-regular.svg"
-import {newGame} from "@/composables/initialState"
+import {newGame, player} from "@/composables/initialState"
 </script>
 
 <style scoped>

@@ -1,6 +1,7 @@
 import Player from "@/model/Player";
 import {player, canvas, ctx, playerPic, enemies, bottomEnemyPic, middleEnemyPic, topEnemyPic, bulletPic, bullets} from "@/composables/initialState";
 import {BottomEnemy, MiddleEnemy, TopEnemy, Enemy} from "@/model/Enemy";
+import Bullet from "./Bullet";
 
 export default class Game {
   private intervalId
@@ -91,6 +92,40 @@ export default class Game {
           enemy.draw(enemy.x, enemy.y)
         }
       })
+
+      function hitEnemy(item1, item2) {
+        let collision = true;
+        if (
+          item1.x > item2.x + Enemy.width ||
+          item1.y > item2.y + Enemy.height ||
+          item2.x > item1.x + Bullet.width ||
+          item2.y > item1.y + Bullet.height
+        ) {
+          collision = false;
+        }
+        return collision;
+      }
+
+      enemies.forEach((enemy, i, enemyObj) => {
+        bullets.forEach((bullet, j, bulletObj) => {
+          let collision = hitEnemy(bullet, enemy);
+          if (collision) {
+            // delete bullet and enemy
+            enemyObj.splice(i, 1)
+            bulletObj.splice(j, 1)
+
+            // increase score
+            if (enemy instanceof BottomEnemy) {
+              player.value.score += 100
+            } else if (enemy instanceof MiddleEnemy) {
+              player.value.score += 200
+            } else {
+              player.value.score += 300
+            }
+          }
+        })
+      })
+
     })
   }
 
