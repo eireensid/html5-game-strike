@@ -1,6 +1,6 @@
 import Player from "@/model/Player";
 import {player, canvas, ctx, playerPic, enemies, bottomEnemyPic, middleEnemyPic, topEnemyPic, bulletPic, bullets} from "@/composables/initialState";
-import {BottomEnemy, MiddleEnemy, TopEnemy} from "@/model/Enemy";
+import {BottomEnemy, MiddleEnemy, TopEnemy, Enemy} from "@/model/Enemy";
 
 export default class Game {
   private intervalId
@@ -23,10 +23,23 @@ export default class Game {
       canvas.value.height - Player.height - 20
     )
 
+    for (let i = bullets.length - 1; i >= 0; i--) {
+      bullets[i]--;
+      if (bullets[i] < 0) {
+        bullets.splice(i, 1);
+      }
+    }
+
+    for (let i = enemies.length - 1; i >= 0; i--) {
+      enemies[i]--;
+      if (enemies[i] < 0) {
+        enemies.splice(i, 1);
+      }
+    }
+
     bottomEnemyPic.value = document.querySelector('#bottomEnemy')
     middleEnemyPic.value = document.querySelector('#middleEnemy')
     topEnemyPic.value = document.querySelector('#topEnemy')
-    // enemy.value = new Enemy(20, 300, bottomEnemyPic.value)
 
     for(let i = 0; i < 15; i++) {
       let enemy = null
@@ -66,8 +79,14 @@ export default class Game {
         }
       })
 
-      enemies.forEach(enemy => {
+      enemies.forEach((enemy, ind) => {
         if (enemy) {
+          if (enemy.x < 0) {
+            enemy.direction = 'right'
+          } else if (enemy.x + Enemy.width > canvas.value.width) {
+            enemy.direction = 'left'
+          }
+
           enemy.update()
           enemy.draw(enemy.x, enemy.y)
         }

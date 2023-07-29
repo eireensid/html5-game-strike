@@ -1,6 +1,6 @@
-import {ctx, bottomEnemyPic, middleEnemyPic, topEnemyPic} from "@/composables/initialState";
+import {ctx, canvas, bottomEnemyPic, middleEnemyPic, topEnemyPic} from "@/composables/initialState";
 
-class Enemy {
+export class Enemy {
   static width = 60
   static height = 60
   step = 1
@@ -11,11 +11,17 @@ class Enemy {
   }
 
   update() {
-    this.x += this.step
+    if (this.direction === 'right') {
+      this.x += this.step
+    } else {
+      this.x -= this.step
+    }
   }
 }
 
 export class BottomEnemy extends Enemy {
+  direction = 'right'
+
   constructor(x, y) {
     super(x, y)
 
@@ -30,6 +36,8 @@ export class BottomEnemy extends Enemy {
 }
 
 export class MiddleEnemy extends Enemy {
+  direction = 'left'
+
   constructor(x, y) {
     super(x, y)
 
@@ -43,11 +51,17 @@ export class MiddleEnemy extends Enemy {
   }
 
   update() {
-    this.x -= this.step
+    if (this.direction === 'left') {
+      this.x -= this.step
+    } else {
+      this.x += this.step
+    }
   }
 }
 
 export class TopEnemy extends Enemy {
+  direction = 'right'
+
   constructor(x, y) {
     super(x, y)
 
