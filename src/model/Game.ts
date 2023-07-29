@@ -1,7 +1,6 @@
 import Player from "@/model/Player";
-import {player, canvas, ctx, playerPic, bottomEnemyPic, bulletPic, bullets} from "@/composables/initialState";
-import {bottomEnemy} from "@/composables/initialState";
-import {BottomEnemy} from "@/model/Enemy";
+import {player, canvas, ctx, playerPic, enemies, bottomEnemyPic, middleEnemyPic, topEnemyPic, bulletPic, bullets} from "@/composables/initialState";
+import {BottomEnemy, MiddleEnemy, TopEnemy} from "@/model/Enemy";
 
 export default class Game {
   private intervalId
@@ -25,7 +24,25 @@ export default class Game {
     )
 
     bottomEnemyPic.value = document.querySelector('#bottomEnemy')
-    bottomEnemy.value = new BottomEnemy(20, 300)
+    middleEnemyPic.value = document.querySelector('#middleEnemy')
+    topEnemyPic.value = document.querySelector('#topEnemy')
+    // enemy.value = new Enemy(20, 300, bottomEnemyPic.value)
+
+    for(let i = 0; i < 15; i++) {
+      let enemy = null
+      let arrX = [20, 120, 220, 320, 420, canvas.value.width - 20, canvas.value.width - 120, canvas.value.width - 220, canvas.value.width - 320,
+        canvas.value.width - 420, 20, 120, 220, 320, 420]
+      if (i >= 0 && i < 5) {
+        enemy = new BottomEnemy(arrX[i], 300)
+      }
+      if (i >= 5 && i < 10) {
+        enemy = new MiddleEnemy(arrX[i], 170)
+      }
+      if (i >= 10 && i < 15) {
+        enemy = new TopEnemy(arrX[i], 50)
+      }
+      enemies.push(enemy)
+    }
 
     bulletPic.value = document.querySelector('#bullet')
   }
@@ -35,7 +52,6 @@ export default class Game {
       ctx.value.fillStyle = "#070F20"
       ctx.value.fillRect(0, 0, canvas.value.width, canvas.value.height)
       player.value.draw(player.value.x, canvas.value.height - Player.height - 20)
-      bottomEnemy.value.draw(20, 300)
 
       bullets.forEach((bullet, ind, obj) => {
         if (bullet.y < 0) {
@@ -47,6 +63,13 @@ export default class Game {
         if (bullet) {
           bullet.update()
           bullet.draw(bullet.x, bullet.y)
+        }
+      })
+
+      enemies.forEach(enemy => {
+        if (enemy) {
+          enemy.update()
+          enemy.draw(enemy.x, enemy.y)
         }
       })
     })
