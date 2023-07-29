@@ -2,11 +2,12 @@
   <div class="wrapper">
     <canvas v-show="!isModalShow" id="canvas" class="canvas"></canvas>
     <img id="player" src="@/assets/img/wbc2.png" style="display: none;"/>
+    <img id="weapon" src="@/assets/img/potion.png" style="display: none;"/>
     <img id="topEnemy" src="@/assets/img/virus1.png" style="display: none;"/>
     <img id="middleEnemy" src="@/assets/img/virus2.png" style="display: none;"/>
     <img id="bottomEnemy" src="@/assets/img/virus3.png" style="display: none;"/>
     <div class="controls" v-show="!isModalShow">
-      <button class="btn fire-btn">[f]ire</button>
+      <button class="btn fire-btn" @click="player.fire">[f]ire</button>
       <button class="btn" @click="player.goLeft">
         <LeftIcon class="icon"/>
       </button>
@@ -21,7 +22,10 @@
 import LeftIcon from "@/assets/icons/left-long-solid.svg"
 import RightIcon from "@/assets/icons/right-long-solid.svg"
 import {onMounted, ref} from "vue";
-import {isModalShow, player, canvas, ctx, playerPic, bottomEnemy, bottomEnemyPic} from "@/composables/initialState";
+import {
+  isModalShow, player, canvas, ctx, playerPic, bottomEnemy, bottomEnemyPic,
+  weapon, weaponPic
+} from "@/composables/initialState";
 import Player from "@/model/Player";
 import {BottomEnemy} from "@/model/Enemy";
 
@@ -40,6 +44,9 @@ onMounted(() => {
 
   bottomEnemyPic.value = document.querySelector('#bottomEnemy')
   bottomEnemy.value = new BottomEnemy(20, 300)
+
+  weaponPic.value = document.querySelector('#weapon')
+
 })
 
 </script>

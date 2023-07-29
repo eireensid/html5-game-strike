@@ -6,7 +6,7 @@ class Enemy {
 
 export class BottomEnemy extends Enemy {
   static width = 60
-  static height = 70
+  static height = 60
 
   constructor(x, y) {
     super()
