@@ -22,9 +22,20 @@ export default class Game {
   }
 
   private init() {
+    function onResize() {
+      if (window.innerWidth >= 960) {
+        canvas.value.width = window.innerWidth * 0.8
+      } else {
+        canvas.value.width = window.innerWidth * 0.95
+      }
+      canvas.value.height = window.innerHeight * 0.75
+      console.log(canvas.value.width)
+    }
+
     canvas.value = document.querySelector('#canvas')
-    canvas.value.height = window.innerHeight * 0.75;
-    canvas.value.width = window.innerWidth * 0.8;
+    onResize()
+    window.addEventListener('resize', onResize);
+
     ctx.value = canvas.value.getContext('2d')
     ctx.value.fillStyle = "#070F20"
     ctx.value.fillRect(0, 0, canvas.value.width, canvas.value.height)
@@ -46,18 +57,24 @@ export default class Game {
     const middleEnemyPic = document.querySelector('#middleEnemy')
     const topEnemyPic = document.querySelector('#topEnemy')
 
+    Enemy.width = canvas.value.width * 0.05
+    Enemy.height = canvas.value.width * 0.05
+
     for(let i = 0; i < 15; i++) {
       let enemy = null
-      let arrX = [20, 120, 220, 320, 420, canvas.value.width - 20, canvas.value.width - 120, canvas.value.width - 220, canvas.value.width - 320,
-        canvas.value.width - 420, 20, 120, 220, 320, 420]
+      const distance = Enemy.width * 2 / 2.5
+      const arrX = [0, Enemy.width + distance, Enemy.width * 2 + distance * 2, Enemy.width * 3 + distance * 3, Enemy.width * 4 + distance * 4,
+        canvas.value.width, canvas.value.width - (Enemy.width + distance), canvas.value.width - (Enemy.width * 2 + distance * 2),
+        canvas.value.width - (Enemy.width * 3 + distance * 3), canvas.value.width - (Enemy.width * 4 + distance * 4),
+        0, Enemy.width + distance, Enemy.width * 2 + distance * 2, Enemy.width * 3 + distance * 3, Enemy.width * 4 + distance * 4]
       if (i >= 0 && i < 5) {
-        enemy = new Enemy(arrX[i], 300, 'bottom', bottomEnemyPic)
+        enemy = new Enemy(arrX[i], (canvas.value.height - Player.height - 20 - Enemy.height), 'bottom', bottomEnemyPic)
       }
       if (i >= 5 && i < 10) {
-        enemy = new Enemy(arrX[i], 170, 'middle', middleEnemyPic)
+        enemy = new Enemy(arrX[i], (canvas.value.height - Player.height - 20 - Enemy.height * 2) * 2/3, 'middle', middleEnemyPic)
       }
       if (i >= 10 && i < 15) {
-        enemy = new Enemy(arrX[i], 50, 'top', topEnemyPic)
+        enemy = new Enemy(arrX[i], (canvas.value.height - Player.height - 20 - Enemy.height * 3) / 3, 'top', topEnemyPic)
       }
       enemies.push(enemy)
     }

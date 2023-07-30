@@ -70,6 +70,7 @@ const resume = () => {
 .title {
   font-weight: 300;
   font-size: 40px;
+  text-align: center;
 }
 .score {
   font-size: 28px;
