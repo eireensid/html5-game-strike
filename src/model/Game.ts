@@ -1,5 +1,5 @@
 import Player from "@/model/Player";
-import {canvas, ctx, modal, isModalShow, isWinShow} from "@/composables/initialState";
+import {canvas, ctx, modal, isModalShow, isWinShow, newGame} from "@/composables/initialState";
 import {Enemy} from "@/model/Enemy";
 import Bullet from "./Bullet";
 import {ref} from "vue";
@@ -86,6 +86,17 @@ export default class Game {
       }
       enemies.push(enemy)
     }
+
+    function onKeyDown(e) {
+      if (e.keyCode === 39) {
+        newGame.player.goRight()
+      } else if (e.keyCode === 37) {
+        newGame.player.goLeft()
+      } else if (e.keyCode === 32) {  // enter
+        newGame.player.fire()
+      }
+    }
+    document.addEventListener('keydown', onKeyDown);
   }
 
   private render() {

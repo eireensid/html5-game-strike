@@ -3,7 +3,7 @@
     <div class="column">
       <button class="btn btn-new" @click="play">NEW</button>
       <div class="hearts">
-        <HeartIcon v-for="(xp, i) in newGame.xp.value" :key="i" class="icon icon-heart" />
+        <HeartIcon v-for="xp in newGame.xp.value" :key="xp" class="icon icon-heart" />
       </div>
       <span class="score">{{newGame.score}}</span>
     </div>
