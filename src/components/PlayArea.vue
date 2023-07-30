@@ -7,7 +7,7 @@
     <img id="middleEnemy" src="@/assets/img/virus2.png" style="display: none;"/>
     <img id="bottomEnemy" src="@/assets/img/virus3.png" style="display: none;"/>
     <div class="controls" v-show="!isModalShow">
-      <button class="btn fire-btn" @click="newGame.player.fire">[f]ire</button>
+      <button class="btn fire-btn" @click="debouncedFire">[f]ire</button>
       <button class="btn" @click="newGame.player.goLeft">
         <LeftIcon class="icon"/>
       </button>
@@ -23,6 +23,9 @@ import LeftIcon from "@/assets/icons/left-long-solid.svg"
 import RightIcon from "@/assets/icons/right-long-solid.svg"
 import {isModalShow} from "@/composables/initialState";
 import {newGame} from "@/composables/initialState";
+import {debounce} from "@/composables/helpers";
+
+const debouncedFire = debounce(() => newGame.player.fire())
 
 </script>
 
