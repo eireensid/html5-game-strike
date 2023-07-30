@@ -2,6 +2,9 @@
   <div class="header">
     <div class="column">
       <button class="btn btn-new" @click="play">NEW</button>
+      <div class="hearts">
+        <HeartIcon v-for="(xp, i) in newGame.xp.value" :key="i" class="icon icon-heart" />
+      </div>
       <span class="score">{{newGame.score}}</span>
     </div>
     <h1 class="title">Critical Space Strike</h1>
@@ -19,6 +22,7 @@
 <script setup>
 import PauseIcon from "@/assets/icons/circle-pause-regular.svg"
 import PlayIcon from "@/assets/icons/circle-play-regular.svg"
+import HeartIcon from "@/assets/icons/heart-solid.svg"
 import {newGame, modal, isModalShow} from "@/composables/initialState"
 import {ref} from "vue";
 
@@ -60,7 +64,7 @@ const resume = () => {
 .column {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 26px;
   flex-basis: 33.3%;
 }
 .column-right {
@@ -87,5 +91,13 @@ const resume = () => {
 }
 .icon-active {
   fill: var(--text-color);
+}
+.hearts {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.icon-heart {
+  fill: #E53935;
 }
 </style>

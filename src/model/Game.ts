@@ -12,6 +12,7 @@ export default class Game {
   private _running = false
   private _player = null
   score = ref(0)
+  xp = ref(3)
 
   get running() {
     return this._running
