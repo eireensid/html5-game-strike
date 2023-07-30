@@ -1,6 +1,5 @@
 import Player from "@/model/Player";
-import {canvas, ctx, modal, isModalShow
-} from "@/composables/initialState";
+import {canvas, ctx, modal, isModalShow, isWinShow} from "@/composables/initialState";
 import {Enemy} from "@/model/Enemy";
 import Bullet from "./Bullet";
 import {ref} from "vue";
@@ -137,15 +136,20 @@ export default class Game {
           }
         })
       })
-
-      if (!enemies.length) {
-        isModalShow.value = modal.open()
-      }
-
     })
+
+    if (!enemies.length) {
+      isModalShow.value = modal.open()
+      isWinShow.value = true
+      this.stop()
+
+      setTimeout(() => {
+        isWinShow.value = false
+      }, 2000)
+    }
   }
 
-  private start() {
+  private resume() {
     this._running = true
 
     this.intervalId = setInterval(() => {
@@ -158,9 +162,9 @@ export default class Game {
     clearInterval(this.intervalId)
   }
 
-  restart() {
+  start() {
     this.stop()
     this.init()
-    this.start()
+    this.resume()
   }
 }

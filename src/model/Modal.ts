@@ -1,5 +1,8 @@
+import {ref} from "vue";
+
 export default class Modal {
-  isShow: boolean
+  isShow = true
+  isWinShow = false
 
   constructor(isShow = true) {
     this.isShow = isShow
@@ -8,6 +11,7 @@ export default class Modal {
   open() {
     return this.isShow = true
   }
+
   close() {
     return this.isShow = false
   }

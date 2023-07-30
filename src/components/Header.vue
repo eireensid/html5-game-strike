@@ -1,16 +1,16 @@
 <template>
   <div class="header">
     <div class="column">
-      <button class="btn btn-new" @click="newGame.restart">NEW</button>
+      <button class="btn btn-new" @click="play">NEW</button>
       <span class="score">{{newGame.score}}</span>
     </div>
     <h1 class="title">Critical Space Strike</h1>
     <div class="column column-right">
-      <button class="btn btn-icon" @click="newGame.stop">
-        <PauseIcon class="icon"/>
+      <button class="btn btn-icon" :class="{'btn-disabled': isPaused}" @click="pause">
+        <PauseIcon class="icon" :class="{'icon-active': isPaused}"/>
       </button>
-      <button class="btn btn-icon" @click="newGame.start">
-        <PlayIcon class="icon icon-start"/>
+      <button class="btn btn-icon" :class="{'btn-disabled': !isPaused}" @click="resume">
+        <PlayIcon class="icon" :class="{'icon-active': !isPaused}"/>
       </button>
     </div>
   </div>
@@ -19,7 +19,29 @@
 <script setup>
 import PauseIcon from "@/assets/icons/circle-pause-regular.svg"
 import PlayIcon from "@/assets/icons/circle-play-regular.svg"
-import {newGame} from "@/composables/initialState"
+import {newGame, modal, isModalShow} from "@/composables/initialState"
+import {ref} from "vue";
+
+const isPaused = ref(false)
+
+const play = () => {
+  isPaused.value = false
+  if (isModalShow.value === true) {
+    isModalShow.value = modal.close()
+  }
+  newGame.start()
+}
+
+const pause = () => {
+  newGame.stop()
+  isPaused.value = true
+}
+
+const resume = () => {
+  newGame.resume()
+  isPaused.value = false
+}
+
 </script>
 
 <style scoped>
@@ -47,7 +69,7 @@ import {newGame} from "@/composables/initialState"
 }
 .title {
   font-weight: 300;
-  font-size: 36px;
+  font-size: 40px;
 }
 .score {
   font-size: 28px;
@@ -59,10 +81,10 @@ import {newGame} from "@/composables/initialState"
   padding: 4px;
 }
 .icon {
-  fill: var(--text-color);
+  fill: var(--accent-color);
   width: 28px;
 }
-.icon-start {
-  fill: var(--accent-color);
+.icon-active {
+  fill: var(--text-color);
 }
 </style>

@@ -22,3 +22,6 @@ body {
 .btn:hover {
   opacity: .7;
 }
+.btn-disabled {
+  pointer-events: none;
+}

@@ -9,3 +9,4 @@ export const canvas = ref(null);
 export const ctx = ref(null);
 
 export const isModalShow = ref(modal.isShow)
+export const isWinShow = ref(modal.isWinShow)

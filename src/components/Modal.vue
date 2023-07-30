@@ -1,16 +1,21 @@
 <template>
   <div class="modal" v-show="isModalShow">
-    <h2 class="title">Welcome to the game!</h2>
-    <button class="btn btn-modal" @click="play">PLAY!</button>
+    <div v-if="isWinShow">
+      <h2 class="win">YOU W0N!</h2>
+    </div>
+    <div class="block" v-else>
+      <h2 class="title">Welcome to the game!</h2>
+      <button class="btn btn-modal" @click="play">PLAY!</button>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import {newGame, modal, isModalShow} from "@/composables/initialState";
+import {newGame, modal, isModalShow, isWinShow} from "@/composables/initialState";
 
 const play = () => {
   isModalShow.value = modal.close()
-  newGame.restart()
+  newGame.start()
 }
 
 </script>
@@ -22,9 +27,14 @@ const play = () => {
   height: 80%;
   background: var(--main-color);
   z-index: 100;
-  top: 58px;
+  top: 62px;
   left: 0;
   color: var(--text-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.block {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -33,8 +43,14 @@ const play = () => {
 }
 .title {
   font-weight: 300;
-  margin-top: -58px;
-  font-size: 30px;
+  margin-top: -48px;
+  font-size: 40px;
+}
+.win {
+  font-weight: 700;
+  margin-top: -40px;
+  font-size: 60px;
+  color: var(--accent-color);
 }
 .btn-modal {
   font-size: 30px;
