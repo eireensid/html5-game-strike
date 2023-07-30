@@ -29,7 +29,6 @@ export default class Game {
         canvas.value.width = window.innerWidth * 0.95
       }
       canvas.value.height = window.innerHeight * 0.75
-      console.log(canvas.value.width)
     }
 
     canvas.value = document.querySelector('#canvas')
@@ -41,6 +40,13 @@ export default class Game {
     ctx.value.fillRect(0, 0, canvas.value.width, canvas.value.height)
     const playerPic = document.querySelector('#player')
     const bulletPic = document.querySelector('#bullet')
+
+    Player.width = canvas.value.width * 0.065
+    Player.height = canvas.value.width * 0.065 + 10
+
+    Bullet.width = canvas.value.width * 0.024
+    Bullet.height = canvas.value.width * 0.024
+
     this._player = new Player(
       canvas.value.width / 2 - Player.width / 2,
       canvas.value.height - Player.height - 20,
@@ -67,14 +73,15 @@ export default class Game {
         canvas.value.width, canvas.value.width - (Enemy.width + distance), canvas.value.width - (Enemy.width * 2 + distance * 2),
         canvas.value.width - (Enemy.width * 3 + distance * 3), canvas.value.width - (Enemy.width * 4 + distance * 4),
         0, Enemy.width + distance, Enemy.width * 2 + distance * 2, Enemy.width * 3 + distance * 3, Enemy.width * 4 + distance * 4]
+      const bottomY = (canvas.value.height - (canvas.value.height - Player.height - 20 - Enemy.height * 3))
       if (i >= 0 && i < 5) {
-        enemy = new Enemy(arrX[i], (canvas.value.height - Player.height - 20 - Enemy.height), 'bottom', bottomEnemyPic)
+        enemy = new Enemy(arrX[i], bottomY, 'bottom', bottomEnemyPic)
       }
       if (i >= 5 && i < 10) {
-        enemy = new Enemy(arrX[i], (canvas.value.height - Player.height - 20 - Enemy.height * 2) * 2/3, 'middle', middleEnemyPic)
+        enemy = new Enemy(arrX[i], bottomY * 2/3, 'middle', middleEnemyPic)
       }
       if (i >= 10 && i < 15) {
-        enemy = new Enemy(arrX[i], (canvas.value.height - Player.height - 20 - Enemy.height * 3) / 3, 'top', topEnemyPic)
+        enemy = new Enemy(arrX[i], bottomY / 3, 'top', topEnemyPic)
       }
       enemies.push(enemy)
     }

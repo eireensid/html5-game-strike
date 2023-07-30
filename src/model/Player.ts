@@ -43,7 +43,8 @@ export default class Player {
   fire() {
     if (!newGame.running) return
 
-    const bullet = new Bullet(this.x + Player.width / 2, 400, this.bulletPic)
+    const bulletY = canvas.value.height - Player.width - Bullet.width - 40
+    const bullet = new Bullet(this.x + Player.width / 2, bulletY, this.bulletPic)
     bullets.push(bullet)
   }
 }
