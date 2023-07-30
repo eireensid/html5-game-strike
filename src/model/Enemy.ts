@@ -5,16 +5,19 @@ export class Enemy {
   static height = 60
   direction: 'left' | 'right' = 'left'
   group: 'top' | 'center' | 'bottom'
-  step = 1
+  step = 2
+  x = 0
+  y = 0
+  pic = null
 
-  constructor(x, y, group, picRef) {
-    picRef.onload = function() {
-      ctx.value.drawImage(picRef, x, y, Enemy.width, Enemy.height)
+  constructor(x, y, group, pic) {
+    pic.onload = function() {
+      ctx.value.drawImage(pic, x, y, Enemy.width, Enemy.height)
     }
 
     this.x = x
     this.y = y
-    this.picRef = picRef
+    this.pic = pic
     this.group = group
 
     if (group === 'top' || group === 'bottom') {
@@ -23,7 +26,7 @@ export class Enemy {
   }
 
   draw(x, y) {
-    ctx.value.drawImage(this.picRef, x, y, Enemy.width, Enemy.height)
+    ctx.value.drawImage(this.pic, x, y, Enemy.width, Enemy.height)
   }
 
   update() {

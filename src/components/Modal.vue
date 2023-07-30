@@ -43,7 +43,7 @@ const play = () => {
 }
 .title {
   font-weight: 300;
-  margin-top: -48px;
+  margin-top: -50px;
   font-size: 40px;
 }
 .win {

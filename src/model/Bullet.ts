@@ -4,6 +4,9 @@ export default class Bullet {
   static width = 30
   static height = 30
   step = 3
+  x = 0
+  y = 0
+  pic = null
 
   constructor(x, y, pic) {
     pic.onload = function() {

@@ -6,6 +6,9 @@ export default class Player {
   static width = 80
   static height = 90
   step = 40
+  x = 0
+  pic = null
+  bulletPic = null
 
   constructor(x, y, pic, bulletPic) {
     pic.onload = function() {
