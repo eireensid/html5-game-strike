@@ -1,71 +1,74 @@
 import Player from "@/model/Player";
-import {player, canvas, ctx, playerPic, enemies, bottomEnemyPic, middleEnemyPic, topEnemyPic, bulletPic, bullets} from "@/composables/initialState";
-import {BottomEnemy, MiddleEnemy, TopEnemy, Enemy} from "@/model/Enemy";
+import {canvas, ctx, modal, isModalShow
+} from "@/composables/initialState";
+import {Enemy} from "@/model/Enemy";
 import Bullet from "./Bullet";
+import {ref} from "vue";
+
+export let bullets = []
+let enemies = []
 
 export default class Game {
   private intervalId
   private _running = false
+  private _player = null
+  score = ref(0)
 
   get running() {
     return this._running
   }
+  
+  get player() {
+    return this._player
+  }
 
-  init() {
+  private init() {
     canvas.value = document.querySelector('#canvas')
     canvas.value.height = window.innerHeight * 0.75;
     canvas.value.width = window.innerWidth * 0.8;
     ctx.value = canvas.value.getContext('2d')
     ctx.value.fillStyle = "#070F20"
     ctx.value.fillRect(0, 0, canvas.value.width, canvas.value.height)
-    playerPic.value = document.querySelector('#player')
-    player.value = new Player(
+    const playerPic = document.querySelector('#player')
+    const bulletPic = document.querySelector('#bullet')
+    this._player = new Player(
       canvas.value.width / 2 - Player.width / 2,
-      canvas.value.height - Player.height - 20
+      canvas.value.height - Player.height - 20,
+      playerPic,
+      bulletPic
     )
 
-    for (let i = bullets.length - 1; i >= 0; i--) {
-      bullets[i]--;
-      if (bullets[i] < 0) {
-        bullets.splice(i, 1);
-      }
-    }
+    this.score.value = 0
 
-    for (let i = enemies.length - 1; i >= 0; i--) {
-      enemies[i]--;
-      if (enemies[i] < 0) {
-        enemies.splice(i, 1);
-      }
-    }
+    bullets = []
+    enemies = []
 
-    bottomEnemyPic.value = document.querySelector('#bottomEnemy')
-    middleEnemyPic.value = document.querySelector('#middleEnemy')
-    topEnemyPic.value = document.querySelector('#topEnemy')
+    const bottomEnemyPic = document.querySelector('#bottomEnemy')
+    const middleEnemyPic = document.querySelector('#middleEnemy')
+    const topEnemyPic = document.querySelector('#topEnemy')
 
     for(let i = 0; i < 15; i++) {
       let enemy = null
       let arrX = [20, 120, 220, 320, 420, canvas.value.width - 20, canvas.value.width - 120, canvas.value.width - 220, canvas.value.width - 320,
         canvas.value.width - 420, 20, 120, 220, 320, 420]
       if (i >= 0 && i < 5) {
-        enemy = new BottomEnemy(arrX[i], 300)
+        enemy = new Enemy(arrX[i], 300, 'bottom', bottomEnemyPic)
       }
       if (i >= 5 && i < 10) {
-        enemy = new MiddleEnemy(arrX[i], 170)
+        enemy = new Enemy(arrX[i], 170, 'middle', middleEnemyPic)
       }
       if (i >= 10 && i < 15) {
-        enemy = new TopEnemy(arrX[i], 50)
+        enemy = new Enemy(arrX[i], 50, 'top', topEnemyPic)
       }
       enemies.push(enemy)
     }
-
-    bulletPic.value = document.querySelector('#bullet')
   }
 
-  render() {
+  private render() {
     requestAnimationFrame(() => {
       ctx.value.fillStyle = "#070F20"
       ctx.value.fillRect(0, 0, canvas.value.width, canvas.value.height)
-      player.value.draw(player.value.x, canvas.value.height - Player.height - 20)
+      this._player.draw(this._player.x, canvas.value.height - Player.height - 20)
 
       bullets.forEach((bullet, ind, obj) => {
         if (bullet.y < 0) {
@@ -80,14 +83,23 @@ export default class Game {
         }
       })
 
-      enemies.forEach((enemy, ind) => {
+      enemies.forEach(enemy => {
         if (enemy) {
+          const groupEnemies = enemies.filter(e => e.group === enemy.group)
           if (enemy.x < 0) {
-            enemy.direction = 'right'
+            for (let groupEnemy of groupEnemies) {
+              groupEnemy.direction = 'right'
+            }
           } else if (enemy.x + Enemy.width > canvas.value.width) {
-            enemy.direction = 'left'
+            for (let groupEnemy of groupEnemies) {
+              groupEnemy.direction = 'left'
+            }
           }
+        }
+      })
 
+      enemies.forEach(enemy => {
+        if (enemy) {
           enemy.update()
           enemy.draw(enemy.x, enemy.y)
         }
@@ -115,21 +127,25 @@ export default class Game {
             bulletObj.splice(j, 1)
 
             // increase score
-            if (enemy instanceof BottomEnemy) {
-              player.value.score += 100
-            } else if (enemy instanceof MiddleEnemy) {
-              player.value.score += 200
+            if (enemy.group === 'bottom') {
+              this.score.value += 100
+            } else if (enemy.group === 'middle') {
+              this.score.value += 200
             } else {
-              player.value.score += 300
+              this.score.value += 300
             }
           }
         })
       })
 
+      if (!enemies.length) {
+        isModalShow.value = modal.open()
+      }
+
     })
   }
 
-  start() {
+  private start() {
     this._running = true
 
     this.intervalId = setInterval(() => {

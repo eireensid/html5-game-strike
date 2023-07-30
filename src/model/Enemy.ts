@@ -1,13 +1,29 @@
-import {ctx, canvas, bottomEnemyPic, middleEnemyPic, topEnemyPic} from "@/composables/initialState";
+import {ctx} from "@/composables/initialState";
 
 export class Enemy {
   static width = 60
   static height = 60
+  direction: 'left' | 'right' = 'left'
+  group: 'top' | 'center' | 'bottom'
   step = 1
 
-  constructor(x, y) {
+  constructor(x, y, group, picRef) {
+    picRef.onload = function() {
+      ctx.value.drawImage(picRef, x, y, Enemy.width, Enemy.height)
+    }
+
     this.x = x
     this.y = y
+    this.picRef = picRef
+    this.group = group
+
+    if (group === 'top' || group === 'bottom') {
+      this.direction = 'right'
+    }
+  }
+
+  draw(x, y) {
+    ctx.value.drawImage(this.picRef, x, y, Enemy.width, Enemy.height)
   }
 
   update() {
@@ -16,61 +32,5 @@ export class Enemy {
     } else {
       this.x -= this.step
     }
-  }
-}
-
-export class BottomEnemy extends Enemy {
-  direction = 'right'
-
-  constructor(x, y) {
-    super(x, y)
-
-    bottomEnemyPic.value.onload = function() {
-      ctx.value.drawImage(bottomEnemyPic.value, x, y, Enemy.width, Enemy.height)
-    }
-  }
-
-  draw(x, y) {
-    ctx.value.drawImage(bottomEnemyPic.value, x, y, Enemy.width, Enemy.height)
-  }
-}
-
-export class MiddleEnemy extends Enemy {
-  direction = 'left'
-
-  constructor(x, y) {
-    super(x, y)
-
-    middleEnemyPic.value.onload = function() {
-      ctx.value.drawImage(middleEnemyPic.value, x, y, Enemy.width, Enemy.height)
-    }
-  }
-
-  draw(x, y) {
-    ctx.value.drawImage(middleEnemyPic.value, x, y, Enemy.width, Enemy.height)
-  }
-
-  update() {
-    if (this.direction === 'left') {
-      this.x -= this.step
-    } else {
-      this.x += this.step
-    }
-  }
-}
-
-export class TopEnemy extends Enemy {
-  direction = 'right'
-
-  constructor(x, y) {
-    super(x, y)
-
-    topEnemyPic.value.onload = function() {
-      ctx.value.drawImage(topEnemyPic.value, x, y, Enemy.width, Enemy.height)
-    }
-  }
-
-  draw(x, y) {
-    ctx.value.drawImage(topEnemyPic.value, x, y, Enemy.width, Enemy.height)
   }
 }

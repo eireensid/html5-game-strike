@@ -7,11 +7,11 @@
     <img id="middleEnemy" src="@/assets/img/virus2.png" style="display: none;"/>
     <img id="bottomEnemy" src="@/assets/img/virus3.png" style="display: none;"/>
     <div class="controls" v-show="!isModalShow">
-      <button class="btn fire-btn" @click="player.fire">[f]ire</button>
-      <button class="btn" @click="player.goLeft">
+      <button class="btn fire-btn" @click="newGame.player.fire">[f]ire</button>
+      <button class="btn" @click="newGame.player.goLeft">
         <LeftIcon class="icon"/>
       </button>
-      <button class="btn" @click="player.goRight">
+      <button class="btn" @click="newGame.player.goRight">
         <RightIcon class="icon"/>
       </button>
     </div>
@@ -21,15 +21,8 @@
 <script setup lang="ts">
 import LeftIcon from "@/assets/icons/left-long-solid.svg"
 import RightIcon from "@/assets/icons/right-long-solid.svg"
-import {onMounted, ref} from "vue";
-import {
-  isModalShow, player
-} from "@/composables/initialState";
-import {newGame} from "../composables/initialState";
-
-onMounted(() => {
-  newGame.init()
-})
+import {isModalShow} from "@/composables/initialState";
+import {newGame} from "@/composables/initialState";
 
 </script>
 

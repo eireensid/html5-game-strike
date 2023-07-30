@@ -10,7 +10,7 @@ import {newGame, modal, isModalShow} from "@/composables/initialState";
 
 const play = () => {
   isModalShow.value = modal.close()
-  newGame.start()
+  newGame.restart()
 }
 
 </script>
