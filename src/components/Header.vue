@@ -88,7 +88,7 @@ const resume = () => {
 }
 .title {
 	font-weight: 300;
-	font-size: 40px;
+	font-size: 46px;
 	text-align: center;
 }
 .score {
@@ -119,9 +119,6 @@ const resume = () => {
 	.row-top {
 		padding: 8px;
 	}
-	.title {
-		font-size: 26px;
-	}
 	.btn-new {
 		font-size: 16px;
 	}
@@ -139,6 +136,14 @@ const resume = () => {
 	}
 	.row-bottom {
 		display: flex;
+	}
+	.title {
+		font-size: 26px;
+	}
+}
+@media screen and (min-width: 821px) and (max-width: 1200px) {
+	.title {
+		font-size: 40px;
 	}
 }
 </style>

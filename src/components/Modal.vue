@@ -28,7 +28,7 @@ const play = () => {
 	height: 80%;
 	background: var(--main-color);
 	z-index: 100;
-	top: 62px;
+	top: 68px;
 	left: 0;
 	color: var(--text-color);
 	display: flex;
@@ -64,9 +64,14 @@ const play = () => {
 		font-size: 26px;
 	}
 }
+@media screen and (min-width: 530px) and (max-width: 767px) {
+	.modal {
+		top: 50px;
+	}
+}
 @media screen and (min-width: 768px) and (max-width: 820px) {
 	.modal {
-		top: 100px;
+		top: 70px;
 	}
 }
 </style>
