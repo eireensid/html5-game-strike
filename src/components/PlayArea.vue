@@ -69,4 +69,9 @@ document.addEventListener('keydown', onKeyDown);
 .fire-btn {
   padding: 14px 8px;
 }
+@media screen and (max-width: 820px) {
+  .wrapper {
+    padding-top: 46px;
+  }
+}
 </style>

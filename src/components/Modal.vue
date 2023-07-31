@@ -55,4 +55,17 @@ const play = () => {
 .btn-modal {
   font-size: 30px;
 }
+@media screen and (max-width: 767px) {
+  .title {
+    font-size: 26px;
+  }
+  .btn-modal {
+    font-size: 26px;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 820px) {
+  .modal {
+    top: 100px;
+  }
+}
 </style>

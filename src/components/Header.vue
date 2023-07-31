@@ -1,20 +1,28 @@
 <template>
   <div class="header">
-    <div class="column">
-      <button class="btn btn-new" @click="play">NEW</button>
-      <div class="hearts">
+    <div class="row row-top">
+      <div class="column">
+        <button class="btn btn-new" @click="play">NEW</button>
+        <div class="hearts">
+          <HeartIcon v-for="xp in newGame.xp.value" :key="xp" class="icon icon-heart" />
+        </div>
+        <span class="score">{{newGame.score}}</span>
+      </div>
+      <h1 class="title">Critical Space Strike</h1>
+      <div class="column column-right">
+        <button class="btn btn-icon" :class="{'btn-disabled': isPaused}" @click="pause">
+          <PauseIcon class="icon" :class="{'icon-active': isPaused}"/>
+        </button>
+        <button class="btn btn-icon" :class="{'btn-disabled': !isPaused}" @click="resume">
+          <PlayIcon class="icon" :class="{'icon-active': !isPaused}"/>
+        </button>
+      </div>
+    </div>
+    <div class="row row-bottom">
+      <span class="score score-mobile">{{newGame.score}}</span>
+      <div class="hearts hearts-mobile">
         <HeartIcon v-for="xp in newGame.xp.value" :key="xp" class="icon icon-heart" />
       </div>
-      <span class="score">{{newGame.score}}</span>
-    </div>
-    <h1 class="title">Critical Space Strike</h1>
-    <div class="column column-right">
-      <button class="btn btn-icon" :class="{'btn-disabled': isPaused}" @click="pause">
-        <PauseIcon class="icon" :class="{'icon-active': isPaused}"/>
-      </button>
-      <button class="btn btn-icon" :class="{'btn-disabled': !isPaused}" @click="resume">
-        <PlayIcon class="icon" :class="{'icon-active': !isPaused}"/>
-      </button>
     </div>
   </div>
 </template>
@@ -50,16 +58,24 @@ const resume = () => {
 
 <style scoped>
 .header {
-  background: var(--main-color);
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px;
   position: fixed;
   top: 0;
   left: 0;
   color: var(--text-color);
+}
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.row-top {
+  background: var(--main-color);
+  padding: 16px;
+}
+.row-bottom {
+  display: none;
+  padding: 8px;
 }
 .column {
   display: flex;
@@ -99,5 +115,30 @@ const resume = () => {
 }
 .icon-heart {
   fill: #E53935;
+}
+@media screen and (max-width: 767px) {
+  .row-top {
+    padding: 8px;
+  }
+  .title {
+    font-size: 26px;
+  }
+  .btn-new {
+    font-size: 16px;
+  }
+}
+@media screen and (max-width: 820px) {
+  .hearts, .score {
+    display: none;
+  }
+  .hearts-mobile {
+    display: flex;
+  }
+  .score-mobile {
+    display: block;
+  }
+  .row-bottom {
+    display: flex;
+  }
 }
 </style>

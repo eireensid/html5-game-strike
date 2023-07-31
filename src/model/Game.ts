@@ -24,12 +24,16 @@ export default class Game {
 
   private init() {
     function onResize() {
-      if (window.innerWidth >= 960) {
-        canvas.value.width = window.innerWidth * 0.8
-      } else {
+      if (window.innerWidth < 768) {
         canvas.value.width = window.innerWidth * 0.95
+        canvas.value.height = window.innerHeight * 0.4
+      } else if (window.innerWidth >= 768 && window.innerWidth < 960) {
+        canvas.value.width = window.innerWidth * 0.95
+        canvas.value.height = window.innerHeight * 0.5
+      } else {
+        canvas.value.width = window.innerWidth * 0.8
+        canvas.value.height = window.innerHeight * 0.75
       }
-      canvas.value.height = window.innerHeight * 0.75
     }
 
     canvas.value = document.querySelector('#canvas')
