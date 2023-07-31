@@ -1,9 +1,8 @@
 import Player from "@/model/Player";
-import {canvas, ctx, modal, isModalShow, isWinShow, newGame} from "@/composables/initialState";
+import {canvas, ctx, modal, isModalShow, isWinShow} from "@/composables/initialState";
 import {Enemy} from "@/model/Enemy";
-import Bullet from "./Bullet";
+import Bullet from "@/model/Bullet";
 import {ref} from "vue";
-import {debounce} from "@/composables/helpers";
 
 export let bullets = []
 let enemies = []
@@ -87,19 +86,6 @@ export default class Game {
       }
       enemies.push(enemy)
     }
-
-    const debouncedFire = debounce(() => newGame.player.fire())
-
-    function onKeyDown(e) {
-      if (e.keyCode === 39) {
-        newGame.player.goRight()
-      } else if (e.keyCode === 37) {
-        newGame.player.goLeft()
-      } else if (e.keyCode === 32) {  // enter
-        debouncedFire()
-      }
-    }
-    document.addEventListener('keydown', onKeyDown);
   }
 
   private render() {

@@ -27,6 +27,18 @@ import {debounce} from "@/composables/helpers";
 
 const debouncedFire = debounce(() => newGame.player.fire())
 
+function onKeyDown(e) {
+  e.preventDefault()
+  if (e.keyCode === 39) {
+    newGame.player.goRight()
+  } else if (e.keyCode === 37) {
+    newGame.player.goLeft()
+  } else if (e.keyCode === 32) {  // enter
+    debouncedFire()
+  }
+}
+document.addEventListener('keydown', onKeyDown);
+
 </script>
 
 <style scoped>
