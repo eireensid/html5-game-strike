@@ -27,7 +27,7 @@
 	</div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import PauseIcon from '@/assets/icons/circle-pause-regular.svg'
 import PlayIcon from '@/assets/icons/circle-play-regular.svg'
 import HeartIcon from '@/assets/icons/heart-solid.svg'
