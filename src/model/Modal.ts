@@ -1,18 +1,18 @@
-import {ref} from "vue";
+import { ref } from 'vue'
 
 export default class Modal {
-  isShow = true
-  isWinShow = false
+	isShow = true
+	isWinShow = false
 
-  constructor(isShow = true) {
-    this.isShow = isShow
-  }
+	constructor(isShow = true) {
+		this.isShow = isShow
+	}
 
-  open() {
-    return this.isShow = true
-  }
+	open() {
+		return (this.isShow = true)
+	}
 
-  close() {
-    return this.isShow = false
-  }
+	close() {
+		return (this.isShow = false)
+	}
 }
