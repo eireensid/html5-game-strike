@@ -1,6 +1,6 @@
 <template>
 	<div class="wrapper">
-		<canvas v-show="!isModalShow" id="canvas" class="canvas"></canvas>
+		<canvas v-show="!isModalShow" id="canvas" ref="canvas" class="canvas"></canvas>
 		<img id="player" src="@/assets/img/wbc2.png" style="display: none" />
 		<img id="bullet" src="@/assets/img/potion.png" style="display: none" />
 		<img id="topEnemy" src="@/assets/img/virus1.png" style="display: none" />
@@ -8,10 +8,10 @@
 		<img id="bottomEnemy" src="@/assets/img/virus3.png" style="display: none" />
 		<div class="controls" v-show="!isModalShow">
 			<button class="btn fire-btn" @click="debouncedFire">[f]ire</button>
-			<button class="btn" @click="newGame.player.goLeft">
+			<button class="btn" @click="newGame.makeAction('goLeft')">
 				<LeftIcon class="icon" />
 			</button>
-			<button class="btn" @click="newGame.player.goRight">
+			<button class="btn" @click="newGame.makeAction('goRight')">
 				<RightIcon class="icon" />
 			</button>
 		</div>
@@ -24,21 +24,47 @@ import RightIcon from '@/assets/icons/right-long-solid.svg'
 import { isModalShow } from '@/composables/initialState'
 import { newGame } from '@/composables/initialState'
 import { debounce } from '@/composables/helpers'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 
-const debouncedFire = debounce(() => newGame.player.fire())
+const canvas = ref(null)
+
+const debouncedFire = debounce(() => newGame.makeAction('fire'))
 
 function onKeyDown(e) {
 	e.preventDefault()
 	if (e.keyCode === 39) {
-		newGame.player.goRight()
+		newGame.makeAction('goRight')
 	} else if (e.keyCode === 37) {
-		newGame.player.goLeft()
+		newGame.makeAction('goLeft')
 	} else if (e.keyCode === 32) {
 		// enter
 		debouncedFire()
 	}
 }
 document.addEventListener('keydown', onKeyDown)
+
+const onResize = () => {
+	if (window.innerWidth < 768) {
+		canvas.value.width = window.innerWidth * 0.95
+		canvas.value.height = window.innerHeight * 0.4
+	} else if (window.innerWidth >= 768 && window.innerWidth < 960) {
+		canvas.value.width = window.innerWidth * 0.95
+		canvas.value.height = window.innerHeight * 0.5
+	} else {
+		canvas.value.width = window.innerWidth * 0.8
+		canvas.value.height = window.innerHeight * 0.75
+	}
+}
+
+onMounted(() => {
+	onResize()
+	window.addEventListener('resize', onResize)
+})
+
+onBeforeUnmount(() => {
+	document.removeEventListener('keydown', onKeyDown)
+	window.removeEventListener('resize', onResize)
+})
 </script>
 
 <style scoped>

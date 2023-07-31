@@ -1,5 +1,4 @@
-import { newGame, canvas, ctx } from '@/composables/initialState'
-import { bullets } from '@/model/Game'
+import { canvas, ctx } from '@/composables/initialState'
 import Bullet from '@/model/Bullet'
 
 export default class Player {
@@ -8,43 +7,29 @@ export default class Player {
 	step = 40
 	x = 0
 	pic = null
-	bulletPic = null
 
-	constructor(x, y, pic, bulletPic) {
+	constructor(x: number, y: number, pic: HTMLImageElement) {
 		pic.onload = function () {
 			ctx.value.drawImage(pic, x, y, Player.width, Player.height)
 		}
 
 		this.x = x
 		this.pic = pic
-		this.bulletPic = bulletPic
 	}
 
-	draw(x, y) {
-		ctx.value.drawImage(this.pic, x, y, Player.width, Player.height)
+	draw() {
+		ctx.value.drawImage(this.pic, this.x, canvas.value.height - Player.height - 20, Player.width, Player.height)
 	}
 
 	goLeft() {
-		if (!newGame.running) return
-
 		if (this.x > this.step) {
 			this.x -= this.step
 		}
 	}
 
 	goRight() {
-		if (!newGame.running) return
-
 		if (this.x < canvas.value.width - Player.width - this.step) {
 			this.x += this.step
 		}
-	}
-
-	fire() {
-		if (!newGame.running) return
-
-		const bulletY = canvas.value.height - Player.width - Bullet.width - 40
-		const bullet = new Bullet(this.x + Player.width / 2, bulletY, this.bulletPic)
-		bullets.push(bullet)
 	}
 }

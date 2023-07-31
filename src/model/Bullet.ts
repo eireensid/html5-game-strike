@@ -18,8 +18,8 @@ export default class Bullet {
 		this.pic = pic
 	}
 
-	draw(x, y) {
-		ctx.value.drawImage(this.pic, x, y, Bullet.width, Bullet.height)
+	draw() {
+		ctx.value.drawImage(this.pic, this.x, this.y, Bullet.width, Bullet.height)
 	}
 
 	update() {
