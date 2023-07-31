@@ -75,7 +75,7 @@ export default abstract class GameRules {
 					// increase score
 					if (enemy.group === 'bottom') {
 						score += 100
-					} else if (enemy.group === 'middle') {
+					} else if (enemy.group === 'center') {
 						score += 200
 					} else {
 						score += 300

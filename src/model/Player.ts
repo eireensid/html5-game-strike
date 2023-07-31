@@ -1,5 +1,4 @@
 import { canvas, ctx } from '@/composables/initialState'
-import Bullet from '@/model/Bullet'
 
 export default class Player {
 	static width = 80

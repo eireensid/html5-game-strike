@@ -1,5 +1,3 @@
-import { ref } from 'vue'
-
 export default class Modal {
 	isShow = true
 	isWinShow = false

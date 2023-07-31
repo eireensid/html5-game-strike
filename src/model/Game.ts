@@ -72,7 +72,7 @@ export default class Game {
 		}
 	}
 
-	private resume() {
+	resume() {
 		this.running = true
 
 		this.intervalId = setInterval(() => {
