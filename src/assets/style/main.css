@@ -18,6 +18,7 @@ body {
   justify-content: center;
   align-items: center;
   transition: all .25s;
+  touch-action: manipulation;
 }
 .btn:hover {
   opacity: .7;

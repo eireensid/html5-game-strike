@@ -55,7 +55,7 @@ export default class GameObjects {
 				enemy = new Enemy(arrX[i], bottomY, 'bottom', GameSprites.bottomEnemyPic)
 			}
 			if (i >= 5 && i < 10) {
-				enemy = new Enemy(arrX[i], (bottomY * 2) / 3, 'middle', GameSprites.middleEnemyPic)
+				enemy = new Enemy(arrX[i], (bottomY * 2) / 3, 'center', GameSprites.middleEnemyPic)
 			}
 			if (i >= 10 && i < 15) {
 				enemy = new Enemy(arrX[i], bottomY / 3, 'top', GameSprites.topEnemyPic)
