@@ -22,7 +22,11 @@ export default class Bullet {
 		ctx.value.drawImage(this.pic, this.x, this.y, Bullet.width, Bullet.height)
 	}
 
-	update() {
-		this.y -= this.step
+	update(direction: 'top' | 'bottom') {
+		if (direction === 'top') {
+			this.y -= this.step
+		} else {
+			this.y += this.step
+		}
 	}
 }

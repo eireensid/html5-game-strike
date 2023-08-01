@@ -3,11 +3,14 @@ import { Enemy } from '@/model/Enemy'
 import { canvas } from '@/composables/initialState'
 import Player from '@/model/Player'
 import GameSprites from '@/model/GameSprites'
+import { randomIntFromInterval } from '@/composables/helpers'
 
 export default class GameObjects {
 	private _bullets: Bullet[] = []
 	private _enemies: Enemy[] = []
 	private _player: Player = null
+	private _enemyBullet: Bullet = null
+	private _isEnemyBullet = false
 
 	get bullets() {
 		return this._bullets
@@ -19,6 +22,14 @@ export default class GameObjects {
 
 	get player() {
 		return this._player
+	}
+
+	get enemyBullet() {
+		return this._enemyBullet
+	}
+
+	get isEnemyBullet() {
+		return this._isEnemyBullet
 	}
 
 	init() {
@@ -84,5 +95,20 @@ export default class GameObjects {
 
 	removeBullet(bullet: Bullet) {
 		this._bullets = this._bullets.filter(b => b !== bullet)
+	}
+
+	createEnemyBullet() {
+		if (!this.enemyBullet && !this.isEnemyBullet) {
+			this._isEnemyBullet = true
+			setTimeout(() => {
+				const randomEnemy = this.enemies[randomIntFromInterval(0, this.enemies.length - 1)]
+				this._enemyBullet = new Bullet(randomEnemy.x, randomEnemy.y, GameSprites.bulletPic)
+			}, 2000)
+		}
+	}
+
+	removeEnemyBullet() {
+		this._enemyBullet = null
+		this._isEnemyBullet = false
 	}
 }

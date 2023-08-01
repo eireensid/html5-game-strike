@@ -1,16 +1,17 @@
 import { Enemy } from '@/model/Enemy'
 import Bullet from '@/model/Bullet'
-import { canvas } from '@/composables/initialState'
+import { canvas, newGame } from '@/composables/initialState'
 import GameObjects from '@/model/GameObjects'
+import Player from '@/model/Player'
 
 export default abstract class GameRules {
-	static hitEnemy(item1, item2) {
+	private static hitHelper(obj1, obj2, class1, class2) {
 		let collision = true
 		if (
-			item1.x > item2.x + Enemy.width ||
-			item1.y > item2.y + Enemy.height ||
-			item2.x > item1.x + Bullet.width ||
-			item2.y > item1.y + Bullet.height
+			obj1.x > obj2.x + class2.width ||
+			obj1.y > obj2.y + class2.height ||
+			obj2.x > obj1.x + class1.width ||
+			obj2.y > obj1.y + class1.height
 		) {
 			collision = false
 		}
@@ -27,7 +28,7 @@ export default abstract class GameRules {
 
 		bullets.forEach(bullet => {
 			if (bullet) {
-				bullet.update()
+				bullet.update('top')
 				bullet.draw()
 			}
 		})
@@ -58,6 +59,23 @@ export default abstract class GameRules {
 		})
 	}
 
+	static hitPlayer(gameObjects: GameObjects): number {
+		const { player, enemyBullet } = gameObjects
+		let xp = newGame.xp.value
+		let collision = null
+		if (enemyBullet) {
+			collision = this.hitHelper(enemyBullet, player, Bullet, Player)
+		}
+
+		if (collision) {
+			//delete enemy bullet, decrease xp
+			gameObjects.removeEnemyBullet()
+			xp -= 1
+		}
+
+		return xp
+	}
+
 	static hitEnemies(gameObjects: GameObjects): number {
 		// bullet hit enemy
 		let score = 0
@@ -66,7 +84,7 @@ export default abstract class GameRules {
 
 		enemies.forEach(enemy => {
 			bullets.forEach(bullet => {
-				let collision = GameRules.hitEnemy(bullet, enemy)
+				let collision = this.hitHelper(bullet, enemy, Bullet, Enemy)
 				if (collision) {
 					// delete bullet and enemy
 					gameObjects.removeEnemy(enemy)
@@ -85,5 +103,18 @@ export default abstract class GameRules {
 		})
 
 		return score
+	}
+
+	static redrawEnemyBullet(gameObjects: GameObjects) {
+		gameObjects.createEnemyBullet()
+
+		if (gameObjects.enemyBullet && gameObjects.isEnemyBullet) {
+			gameObjects.enemyBullet.update('bottom')
+			gameObjects.enemyBullet.draw()
+		}
+
+		if (gameObjects.enemyBullet && gameObjects.enemyBullet.y > canvas.value.height) {
+			gameObjects.removeEnemyBullet()
+		}
 	}
 }

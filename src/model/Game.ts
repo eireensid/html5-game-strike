@@ -33,6 +33,7 @@ export default class Game {
 		Enemy.height = canvas.value.width * 0.05
 
 		this.score.value = 0
+		this.xp.value = 3
 
 		this.gameObjects.init()
 	}
@@ -43,10 +44,11 @@ export default class Game {
 			this.gameObjects.player.draw()
 
 			GameRules.redrawBullets(this.gameObjects.bullets)
-
 			GameRules.redrawEnemies(this.gameObjects.enemies)
+			GameRules.redrawEnemyBullet(this.gameObjects)
 
 			this.score.value += GameRules.hitEnemies(this.gameObjects)
+			this.xp.value = GameRules.hitPlayer(this.gameObjects)
 		})
 
 		// show win modal
@@ -59,6 +61,17 @@ export default class Game {
 				isWinShow.value = false
 			}, 2000)
 		}
+
+		// show loose modal
+		// if (!this.xp.value) {
+		// 	isModalShow.value = modal.open()
+		// 	isWinShow.value = true
+		// 	this.stop()
+		//
+		// 	setTimeout(() => {
+		// 		isWinShow.value = false
+		// 	}, 2000)
+		// }
 	}
 
 	makeAction(action: 'goLeft' | 'goRight' | 'fire') {

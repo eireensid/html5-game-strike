@@ -12,6 +12,7 @@
 
 <script setup lang="ts">
 import { newGame, modal, isModalShow, isWinShow } from '@/composables/initialState'
+import { onMounted, onBeforeUnmount } from 'vue'
 
 const play = () => {
 	newGame.start()
@@ -19,6 +20,20 @@ const play = () => {
 		isModalShow.value = modal.close()
 	}, 50)
 }
+
+const onKeyUp = e => {
+	if (e.keyCode === 13) {
+		play()
+	}
+}
+
+onMounted(() => {
+	document.addEventListener('keyup', onKeyUp)
+})
+
+onBeforeUnmount(() => {
+	document.removeEventListener('keyup', onKeyUp)
+})
 </script>
 
 <style scoped>
