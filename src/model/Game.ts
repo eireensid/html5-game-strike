@@ -1,5 +1,5 @@
 import Player from '@/model/Player'
-import { canvas, ctx, modal, isModalShow, isWinShow, newGame } from '@/composables/initialState'
+import { canvas, ctx, modal, isModalShow, newGame, isModalBtnShow, modalTextClass } from '@/composables/initialState'
 import { Enemy } from '@/model/Enemy'
 import Bullet from '@/model/Bullet'
 import { ref } from 'vue'
@@ -45,33 +45,24 @@ export default class Game {
 
 			GameRules.redrawBullets(this.gameObjects.bullets)
 			GameRules.redrawEnemies(this.gameObjects.enemies)
-			GameRules.redrawEnemyBullet(this.gameObjects)
 
 			this.score.value += GameRules.hitEnemies(this.gameObjects)
 			this.xp.value = GameRules.hitPlayer(this.gameObjects)
+
+			if (this.gameObjects.enemies.length > 0) {
+				GameRules.redrawEnemyBullet(this.gameObjects)
+			}
 		})
 
-		// show win modal
+		// show you won
 		if (!this.gameObjects.enemies.length) {
-			isModalShow.value = modal.open()
-			isWinShow.value = true
-			this.stop()
-
-			setTimeout(() => {
-				isWinShow.value = false
-			}, 2000)
+			this.showEndResult('YOU W0N!', 'win')
 		}
 
-		// show loose modal
-		// if (!this.xp.value) {
-		// 	isModalShow.value = modal.open()
-		// 	isWinShow.value = true
-		// 	this.stop()
-		//
-		// 	setTimeout(() => {
-		// 		isWinShow.value = false
-		// 	}, 2000)
-		// }
+		// show you lost
+		if (!this.xp.value) {
+			this.showEndResult('YOU LOST!', 'loose')
+		}
 	}
 
 	makeAction(action: 'goLeft' | 'goRight' | 'fire') {
@@ -83,6 +74,19 @@ export default class Game {
 		} else if (action === 'fire') {
 			this.gameObjects.createBullet()
 		}
+	}
+
+	showEndResult(message, cl) {
+		isModalShow.value = modal.open(message)
+		isModalBtnShow.value = modal.toggleBtn(false)
+		modalTextClass.value = cl
+		this.stop()
+
+		setTimeout(() => {
+			isModalBtnShow.value = modal.toggleBtn(true)
+			modal.message = 'Welcome to the game!'
+			modalTextClass.value = ''
+		}, 2000)
 	}
 
 	resume() {

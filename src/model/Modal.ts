@@ -1,16 +1,40 @@
-export default class Modal {
-	isShow = true
-	isWinShow = false
+import { ref } from 'vue'
 
-	constructor(isShow = true) {
-		this.isShow = isShow
+export default class Modal {
+	private _isShow = true
+	private _message = ref('Welcome to the game!')
+	private _isBtnShow = true
+
+	get isShow() {
+		return this._isShow
 	}
 
-	open() {
-		return (this.isShow = true)
+	get isBtnShow() {
+		return this._isBtnShow
+	}
+
+	get message() {
+		return this._message.value
+	}
+
+	set message(mes) {
+		this._message.value = mes
+	}
+
+	constructor(isShow = true) {
+		this._isShow = isShow
+	}
+
+	open(text) {
+		this.message = text
+		return (this._isShow = true)
 	}
 
 	close() {
-		return (this.isShow = false)
+		return (this._isShow = false)
+	}
+
+	toggleBtn(bool) {
+		return (this._isBtnShow = bool)
 	}
 }

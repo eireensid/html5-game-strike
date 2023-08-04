@@ -4,7 +4,8 @@
 			<div class="column">
 				<button class="btn btn-new" @click="play">NEW</button>
 				<div class="hearts">
-					<HeartIcon v-for="xp in newGame.xp.value" :key="xp" class="icon icon-heart" />
+					<HeartFilledIcon v-for="xp in newGame.xp.value" :key="xp" class="icon icon-heart" />
+					<HeartStrokeIcon v-for="xp in totalHearts - newGame.xp.value" :key="xp" class="icon icon-heart" />
 				</div>
 				<span class="score">{{ newGame.score }}</span>
 			</div>
@@ -21,7 +22,8 @@
 		<div class="row row-bottom">
 			<span class="score score-mobile">{{ newGame.score }}</span>
 			<div class="hearts hearts-mobile">
-				<HeartIcon v-for="xp in newGame.xp.value" :key="xp" class="icon icon-heart" />
+				<HeartFilledIcon v-for="xp in newGame.xp.value" :key="xp" class="icon icon-heart" />
+				<HeartStrokeIcon v-for="xp in totalHearts - newGame.xp.value" :key="xp" class="icon icon-heart" />
 			</div>
 		</div>
 	</div>
@@ -30,11 +32,13 @@
 <script setup lang="ts">
 import PauseIcon from '@/assets/icons/circle-pause-regular.svg'
 import PlayIcon from '@/assets/icons/circle-play-regular.svg'
-import HeartIcon from '@/assets/icons/heart-solid.svg'
+import HeartFilledIcon from '@/assets/icons/heart-solid.svg'
+import HeartStrokeIcon from '@/assets/icons/heart-regular.svg'
 import { newGame, modal, isModalShow } from '@/composables/initialState'
 import { ref } from 'vue'
 
 const isPaused = ref(false)
+const totalHearts = newGame.xp.value
 
 const play = () => {
 	isPaused.value = false

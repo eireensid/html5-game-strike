@@ -1,17 +1,14 @@
 <template>
 	<div class="modal" v-show="isModalShow">
-		<div v-if="isWinShow">
-			<h2 class="win">YOU W0N!</h2>
-		</div>
-		<div class="block" v-else>
-			<h2 class="title">Welcome to the game!</h2>
-			<button class="btn btn-modal" @click="play">PLAY!</button>
+		<div class="block">
+			<h2 class="title" :class="modalTextClass">{{ modal.message }}</h2>
+			<button v-if="isModalBtnShow" class="btn btn-modal" @click="play">PLAY!</button>
 		</div>
 	</div>
 </template>
 
 <script setup lang="ts">
-import { newGame, modal, isModalShow, isWinShow } from '@/composables/initialState'
+import { newGame, modal, isModalShow, isModalBtnShow, modalTextClass } from '@/composables/initialState'
 import { onMounted, onBeforeUnmount } from 'vue'
 
 const play = () => {
@@ -67,6 +64,12 @@ onBeforeUnmount(() => {
 	margin-top: -40px;
 	font-size: 60px;
 	color: var(--accent-color);
+}
+.loose {
+	font-weight: 700;
+	margin-top: -40px;
+	font-size: 60px;
+	color: #e53935;
 }
 .btn-modal {
 	font-size: 30px;

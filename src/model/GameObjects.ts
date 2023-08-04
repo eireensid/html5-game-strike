@@ -71,6 +71,7 @@ export default class GameObjects {
 			if (i >= 10 && i < 15) {
 				enemy = new Enemy(arrX[i], bottomY / 3, 'top', GameSprites.topEnemyPic)
 			}
+			enemy.ind = i
 			this._enemies.push(enemy)
 		}
 	}
@@ -98,13 +99,16 @@ export default class GameObjects {
 	}
 
 	createEnemyBullet() {
-		if (!this.enemyBullet && !this.isEnemyBullet) {
-			this._isEnemyBullet = true
-			setTimeout(() => {
-				const randomEnemy = this.enemies[randomIntFromInterval(0, this.enemies.length - 1)]
+		setTimeout(() => {
+			if (!this.enemyBullet && !this.isEnemyBullet) {
+				this._isEnemyBullet = true
+				const random = randomIntFromInterval(0, this._enemies.length - 1)
+				console.log(random, this.enemies.length)
+				const randomEnemy = this.enemies[random]
+				console.log(randomEnemy)
 				this._enemyBullet = new Bullet(randomEnemy.x, randomEnemy.y, GameSprites.bulletPic)
-			}, 2000)
-		}
+			}
+		}, 2000)
 	}
 
 	removeEnemyBullet() {
