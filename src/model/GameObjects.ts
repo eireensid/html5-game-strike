@@ -103,9 +103,7 @@ export default class GameObjects {
 			if (!this.enemyBullet && !this.isEnemyBullet) {
 				this._isEnemyBullet = true
 				const random = randomIntFromInterval(0, this._enemies.length - 1)
-				console.log(random, this.enemies.length)
 				const randomEnemy = this.enemies[random]
-				console.log(randomEnemy)
 				this._enemyBullet = new Bullet(randomEnemy.x, randomEnemy.y, GameSprites.bulletPic)
 			}
 		}, 2000)
