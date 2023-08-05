@@ -2,17 +2,16 @@ import { Enemy } from '@/model/Enemy'
 import Bullet from '@/model/Bullet'
 import { canvas, newGame } from '@/composables/initialState'
 import GameObjects from '@/model/GameObjects'
-import Player from '@/model/Player'
+import { RectangleBounds } from './types'
 
 export default abstract class GameRules {
-	private static hitHelper(obj1, obj2, class1, class2) {
+	private static hitHelper(bulletRec: RectangleBounds, targetRec: RectangleBounds) {
 		let collision = true
-		if (
-			obj1.x > obj2.x + class2.width ||
-			obj1.y > obj2.y + class2.height ||
-			obj2.x > obj1.x + class1.width ||
-			obj2.y > obj1.y + class1.height
-		) {
+		const missY = bulletRec.y > targetRec.y + targetRec.height ||
+			targetRec.y > bulletRec.y + bulletRec.height
+		const missX = bulletRec.x > targetRec.x + targetRec.width ||
+			targetRec.x > bulletRec.x + bulletRec.width
+		if (missX || missY) {
 			collision = false
 		}
 		return collision
@@ -64,7 +63,7 @@ export default abstract class GameRules {
 		let xp = newGame.xp.value
 		let collision = null
 		if (enemyBullet) {
-			collision = this.hitHelper(enemyBullet, player, Bullet, Player)
+			collision = this.hitHelper(enemyBullet.toRectangleBounds(), player.toRectangleBounds())
 		}
 
 		if (collision) {
@@ -84,7 +83,7 @@ export default abstract class GameRules {
 
 		enemies.forEach(enemy => {
 			bullets.forEach(bullet => {
-				let collision = this.hitHelper(bullet, enemy, Bullet, Enemy)
+				let collision = this.hitHelper(bullet.toRectangleBounds(), enemy.toRectangleBounds())
 				if (collision) {
 					// delete bullet and enemy
 					gameObjects.removeEnemy(enemy)

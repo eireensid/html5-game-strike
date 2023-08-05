@@ -1,4 +1,5 @@
 import { ctx } from '@/composables/initialState'
+import { RectangleBounds } from './types'
 
 export default class Bullet {
 	static width = 30
@@ -27,6 +28,15 @@ export default class Bullet {
 			this.y -= this.step
 		} else {
 			this.y += this.step
+		}
+	}
+
+	toRectangleBounds(): RectangleBounds {
+		return {
+			x: this.x,
+			y: this.y,
+			height: Bullet.height,
+			width: Bullet.width
 		}
 	}
 }
